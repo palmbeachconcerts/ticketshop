@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meine Minimal-Website</title>
+  <meta name="description" content="Moderne, minimalistische Ein-Seiten-Website." />
+  <meta name="color-scheme" content="light" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --accent: #ff2ea6; /* kräftiges Pink */
+      --border: #ececec;
+      --radius: 16px;
+      --maxw: 1100px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    /* Typografie */
+    h1, h2, h3 { color: var(--accent); line-height: 1.15; margin: 0 0 12px; }
+    h1 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.5rem, 2.8vw, 2.2rem); letter-spacing: -0.01em; }
+    p  { margin: 0 0 14px; color: var(--text); }
+    .muted { color: var(--muted); }
+
+    /* Layout */
+    .container { width: min(100% - 32px, var(--maxw)); margin-inline: auto; }
+    header {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: saturate(180%) blur(10px);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+    .logo { width: 36px; height: 36px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #ffa7d8, var(--accent)); display: grid; place-items: center; }
+    .logo span { color: white; font-weight: 700; font-size: 18px; }
+    nav a { text-decoration: none; color: var(--text); opacity: .85; padding: 8px 10px; border-radius: 10px; }
+    nav a:hover { background: var(--border); opacity: 1; }
+
+    /* Hero */
+    .hero { padding: clamp(48px, 8vw, 96px) 0; }
+    .hero-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 5vw, 56px); align-items: center; }
+    .card {
+      border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(16px, 3vw, 28px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.04);
+      background: #fff;
+    }
+    .cta { display: inline-block; padding: 12px 18px; border-radius: 999px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; }
+    .cta:hover { filter: brightness(0.95); }
+    .cta.secondary { background: #000; }
+
+    /* Placeholder Bildrahmen (ersetzbar durch eigenes Logo/Bild) */
+    .mock {
+      aspect-ratio: 4 / 3; border-radius: var(--radius); border: 1px dashed var(--border);
+      display: grid; place-items: center; color: var(--muted);
+    }
+
+    /* Sektionen */
+    section { padding: clamp(36px, 6vw, 72px) 0; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature { border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; background: #fff; }
+    .feature h3 { margin-bottom: 6px; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 24px 0; color: var(--muted); font-size: 14px; }
+
+    /* Responsiv */
+    @media (max-width: 860px) {
+      .hero-wrap { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Startseite">
+        <!-- Inline-Logo (ersetzbar) -->
+        <div class="logo" aria-hidden="true"><span>Λ</span></div>
+        <strong>Meine Marke</strong>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <a href="#about">Über</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="hero-wrap">
+        <div>
+          <h1>Modern. Minimalistisch. Auf den Punkt.</h1>
+          <p class="muted">Ein cleanes One‑Pager‑Template mit weißem Hintergrund, pinken Überschriften und schwarzem Text. Perfekt für schnelle Projekte, Landingpages oder Events.</p>
+          <div style="display:flex; gap:10px; margin-top:14px;">
+            <a class="cta" href="#contact">Jetzt anfragen</a>
+            <a class="cta secondary" href="#features">Mehr erfahren</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="mock">Ersetze mich mit einem Bild oder deinem Logo</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2>Über dieses Template</h2>
+        <p>Dieses minimalistische Layout ist schnell angepasst. Farben, Texte und Logo lassen sich in wenigen Minuten austauschen. Keine externen Libraries nötig, 100% HTML & CSS.</p>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+      <div class="container">
+        <h2>Warum das funktioniert</h2>
+        <div class="features">
+          <div class="feature">
+            <h3>Schnell</h3>
+            <p>Leichtgewichtiges Markup, performanter Render, ideal für GitHub Pages.</p>
+          </div>
+          <div class="feature">
+            <h3>Klar</h3>
+            <p>Fokus auf Inhalt. Pinke Akzente leiten die Aufmerksamkeit.</p>
+          </div>
+          <div class="feature">
+            <h3>Responsiv</h3>
+            <p>Sieht auf Desktop, Tablet und Smartphone gut aus – ohne Aufwand.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <h2>Kontakt</h2>
+        <p>Schreib mir eine Nachricht oder ersetze diesen Text mit deinem bevorzugten Call‑to‑Action.</p>
+        <div class="card" role="form" aria-label="Kontaktformular (Platzhalter)">
+          <p><strong>E‑Mail:</strong> hallo@beispiel.de</p>
+          <p><strong>Instagram:</strong> @deinprofil</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="year"></span> Meine Marke. Alle Rechte vorbehalten.</small>
+    </div>
+  </footer>
+
+  <script>
+    // Jahreszahl automatisch aktualisieren
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
