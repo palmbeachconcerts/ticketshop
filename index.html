@@ -55,6 +55,19 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.04);
       background: #fff;
     }
+    .hero .card {
+  display: flex;
+  align-items: center;   /* vertikal zentrieren */
+  justify-content: center; /* horizontal zentrieren */
+  /* optional etwas weniger Innenabstand, damit das Logo größer wirken kann: */
+  padding: clamp(12px, 2vw, 20px);
+}
+.hero #heroImg {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
     .cta { display: inline-block; padding: 12px 18px; border-radius: 999px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; }
     .cta:hover { filter: brightness(0.95); }
     .cta.secondary { background: #000; }
@@ -106,6 +119,7 @@
     .contact-form button:hover { filter: brightness(0.95); }
     .form-status { margin-top: 10px; font-size: 14px; color: var(--muted); }
 
+    
 </style>
 </head>
 <body>
@@ -136,7 +150,9 @@
         </div>
       </div>
       <div class="card">
-    <img id="heroImg" src="pbc_logo_transp_4000.png" alt="Palm Beach Concerts Logo"
+  <img id="heroImg"
+     src="pbc_logo_transp_4000.png"
+     alt="Palm Beach Concerts Logo"
      style="max-width:100%; height:auto; border-radius: var(--radius); object-fit:contain; display:block; margin:0 auto;"
      loading="lazy" decoding="async" />
       </div>
@@ -298,18 +314,27 @@
 })();
 </script>
 <script>
-  // Bildhöhe an die Höhe des .muted-Absatzes anpassen
-  function syncHeroImageHeight() {
-    var muted = document.querySelector('.hero .muted');
-    var img   = document.getElementById('heroImg');
-    if (!muted || !img) return;
-    var h = muted.getBoundingClientRect().height;
-    img.style.maxHeight = h + 'px';
+  function sizeHeroImg() {
+    const title = document.querySelector('.hero h1');
+    const ctas  = document.querySelector('.hero .cta')?.parentElement; // div mit den Buttons
+    const img   = document.getElementById('heroImg');
+    if (!title || !ctas || !img) return;
+
+    // Höhe: von H1-Top bis CTA-Bottom
+    const h1Rect  = title.getBoundingClientRect();
+    const ctaRect = ctas.getBoundingClientRect();
+    const targetH = Math.max(140, Math.round(ctaRect.bottom - h1Rect.top)); // min. 140px
+
+    // Auf Desktop begrenzen, auf Mobile (einspaltig) wieder freigeben
+    if (window.matchMedia('(max-width: 860px)').matches) {
+      img.style.maxHeight = '';
+    } else {
+      img.style.maxHeight = targetH + 'px';
+    }
   }
 
-  // Nach dem Laden und bei Resize anwenden
-  window.addEventListener('DOMContentLoaded', syncHeroImageHeight);
-  window.addEventListener('resize', syncHeroImageHeight);
+  window.addEventListener('load', sizeHeroImg);
+  window.addEventListener('resize', sizeHeroImg);
 </script>
 </body>
 </html>
