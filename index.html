@@ -125,22 +125,23 @@
   </header>
 
   <main id="top">
-    <section class="hero container">
-      <div class="hero-wrap">
-        <div>
-          <h1>Willkommen im Ticketshop</h1>
-          <p class="muted">Kaufe deine Tickets für die kommenden Palm Beach Concerts Events direkt hier – schnell, sicher und unkompliziert.</p>
-          <div style="display:flex; gap:10px; margin-top:14px;">
-            <a class="cta" href="#features">Tickets kaufen</a>
-            <a class="cta secondary" href="#contact">Fragen stellen</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="pbc_logo_transp_4000.png" alt="Palm Beach Concerts Logo" style="width:100%; height:auto; border-radius: var(--radius);" />
+  <section class="hero container">
+    <div class="hero-wrap">
+      <div>
+        <h1>Willkommen im Ticketshop</h1>
+        <p class="muted">Kaufe deine Tickets für die kommenden Palm Beach Concerts Events direkt hier – schnell, sicher und unkompliziert.</p>
+        <div style="display:flex; gap:10px; margin-top:14px;">
+          <a class="cta" href="#features">Tickets kaufen</a>
+          <a class="cta secondary" href="#contact">Fragen stellen</a>
         </div>
       </div>
-    </section>
-
+      <div class="card">
+    <img id="heroImg" src="pbc_logo_transp_4000.png" alt="Palm Beach Concerts Logo"
+     style="max-width:100%; height:auto; border-radius: var(--radius); object-fit:contain; display:block; margin:0 auto;"
+     loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </section>
 <section id="about">
   <div class="container">
     <h2>Aktuelle Konzerte</h2>
@@ -296,6 +297,19 @@
   });
 })();
 </script>
+<script>
+  // Bildhöhe an die Höhe des .muted-Absatzes anpassen
+  function syncHeroImageHeight() {
+    var muted = document.querySelector('.hero .muted');
+    var img   = document.getElementById('heroImg');
+    if (!muted || !img) return;
+    var h = muted.getBoundingClientRect().height;
+    img.style.maxHeight = h + 'px';
+  }
 
+  // Nach dem Laden und bei Resize anwenden
+  window.addEventListener('DOMContentLoaded', syncHeroImageHeight);
+  window.addEventListener('resize', syncHeroImageHeight);
+</script>
 </body>
 </html>
