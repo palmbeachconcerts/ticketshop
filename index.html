@@ -1,3 +1,14 @@
+Weiter zum Inhalt
+Chatverlauf
+Du:
+wenn ich dir einen Quellcode schicke, kannst du mir den ergänzen ?
+ChatGPT:
+
+Klar! 😊
+Schick mir einfach den Quellcode und sag mir, was du ergänzt oder geändert haben möchtest. Dann baue ich das für dich ein.
+
+Möchtest du, dass ich den Code direkt hier anpasse, oder soll ich dir eine neue, saubere Version als Datei generieren?
+Du:
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -357,4 +368,371 @@
   window.addEventListener('resize', sizeHeroImg);
 </script>
 </body>
-</html>
+</html> 
+ChatGPT:
+
+Yes! Ich hab dir deinen Code einmal „rundgemacht“ und ein paar sinnvolle Ergänzungen eingebaut:
+
+    Fixes/Feinschliff: kaputte Nav-Verlinkung aufs Impressum gefixt, doppeltes </main> entfernt, verschachtelte .card beim Kontakt bereinigt, Tippfehler „Geschöftsbedingungen“ → „Geschäftsbedingungen“.
+
+    UX/Accessiblity: Skip-Link, bessere Fokus-Styles, scroll-margin-top für Sticky-Header, Buttons/Links mit ARIA.
+
+    Performance/SEO: loading="lazy" für Bilder/iFrame, Open-Graph/Twitter Meta, strukturierte Daten (JSON-LD) für „Organization“.
+
+    Dark-Mode Optik via prefers-color-scheme.
+
+    Kleine JS-Hilfen bleiben, plus sanftes, robustes Verhalten.
+
+Wenn du lieber nur einzelne Teile willst (z. B. nur Dark-Mode oder nur SEO), sag Bescheid—hier erstmal die vollständige, bereinigte Version:
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palm Beach Concerts – Ticketshop</title>
+  <meta name="description" content="Offizieller Ticketshop von Palm Beach Concerts." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#ff2ea6" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Palm Beach Concerts – Ticketshop" />
+  <meta property="og:description" content="Tickets schnell, sicher und unkompliziert." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="pbc_logo_transp_4000.png" />
+  <meta property="og:url" content="https://www.palmbeachconcerts.de/tickets" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Palm Beach Concerts – Ticketshop" />
+  <meta name="twitter:description" content="Tickets schnell, sicher und unkompliziert." />
+  <meta name="twitter:image" content="pbc_logo_transp_4000.png" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --accent: #ff2ea6; /* kräftiges Pink */
+      --border: #ececec;
+      --radius: 16px;
+      --maxw: 1100px;
+      --shadow: 0 10px 30px rgba(0,0,0,.04);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f12;
+        --text: #f2f2f2;
+        --muted: #b9b9b9;
+        --border: #2a2a2e;
+        --shadow: 0 10px 30px rgba(0,0,0,.3);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    h1, h2, h3 { color: var(--accent); line-height: 1.15; margin: 0 0 12px; }
+    h1 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.5rem, 2.8vw, 2.2rem); letter-spacing: -0.01em; }
+    p  { margin: 0 0 14px; color: var(--text); }
+    .muted { color: var(--muted); }
+
+    .container { width: min(100% - 32px, var(--maxw)); margin-inline: auto; }
+    header {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: saturate(180%) blur(10px);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+    .brand img { height: 40px; width: auto; border-radius: 8px; }
+    nav a { text-decoration: none; color: var(--text); opacity: .85; padding: 8px 10px; border-radius: 10px; }
+    nav a:hover, nav a:focus-visible { background: var(--border); opacity: 1; }
+
+    .hero { padding: clamp(48px, 8vw, 96px) 0; scroll-margin-top: 90px; }
+    .hero-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 5vw, 56px); align-items: center; }
+    .card {
+      border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(16px, 3vw, 28px);
+      box-shadow: var(--shadow);
+      background: var(--bg);
+    }
+
+    .hero .card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 2vw, 20px);
+    }
+    .hero #heroImg {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .cta {
+      display: inline-block; padding: 12px 18px; border-radius: 999px;
+      background: var(--accent); color: #fff; text-decoration: none; font-weight: 600;
+    }
+    .cta:hover, .cta:focus-visible { filter: brightness(0.95); }
+    .cta.secondary { background: #000; }
+
+    section { padding: clamp(36px, 6vw, 72px) 0; }
+    section[id] { scroll-margin-top: 90px; }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature { border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; background: var(--bg); }
+    .feature h3 { margin-bottom: 6px; }
+
+    .mock {
+      aspect-ratio: 4 / 3; border-radius: var(--radius); border: 1px dashed var(--border);
+      display: grid; place-items: center; color: var(--muted);
+    }
+
+    footer { border-top: 1px solid var(--border); padding: 24px 0; color: var(--muted); font-size: 14px; }
+    footer a:hover, footer a:focus-visible { color: var(--accent); }
+
+    @media (max-width: 860px) {
+      .hero-wrap { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+
+    /* Kontaktformular */
+    .contact-form { max-width: 520px; }
+    .contact-form label { display:block; font-weight:600; margin:10px 0 6px; color: var(--text); }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+    }
+    .contact-form textarea { min-height: 140px; resize: vertical; }
+    .contact-form button {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .contact-form button:hover, .contact-form button:focus-visible { filter: brightness(0.95); }
+    .form-status { margin-top: 10px; font-size: 14px; color: var(--muted); }
+
+    /* Impressum kompakter in einer Karte */
+    #Impressum .card.impressum-card { line-height: 1.3; }
+    #Impressum .card.impressum-card p { margin: 4px 0; }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute; left: -9999px; top: auto;
+    }
+    .skip-link:focus {
+      left: 16px; top: 16px; z-index: 1000;
+      background: var(--accent); color:#fff; padding:10px 14px; border-radius: 12px;
+      text-decoration: none;
+    }
+  </style>
+
+  <!-- JSON-LD Organization -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Palm Beach Concerts",
+    "url":"https://www.palmbeachconcerts.de",
+    "logo":"https://www.palmbeachconcerts.de/pbc_logo_transp_4000.png",
+    "sameAs":[
+      "https://www.instagram.com/palmbeachconcerts",
+      "https://www.facebook.com/palmbeachconcerts"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#top">Zum Inhalt springen</a>
+
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Startseite">
+        <img src="pbc_logo_transp_4000.png" alt="Palm Beach Concerts Logo" loading="lazy" decoding="async" />
+        <strong>Palm Beach Concerts</strong>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <a href="#about">Über</a>
+        <a href="#features">Tickets</a>
+        <a href="#contact">Kontakt</a>
+        <a href="#Impressum">Impressum</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-wrap">
+        <div>
+          <h1>Willkommen im Ticketshop</h1>
+          <p class="muted">Kaufe deine Tickets für die kommenden Palm Beach Concerts Events direkt hier – schnell, sicher und unkompliziert.</p>
+          <div style="display:flex; gap:10px; margin-top:14px;">
+            <a class="cta" href="#features">Tickets kaufen</a>
+          </div>
+        </div>
+        <div class="card" aria-hidden="true">
+          <img id="heroImg"
+               src="pbc_logo_transp_4000.png"
+               alt=""
+               style="max-width:100%; height:auto; border-radius: var(--radius); object-fit:contain; display:block; margin:0 auto;"
+               loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2>Aktuelle Konzerte</h2>
+        <p>
+          <a href="https://www.palmbeachconcerts.de" target="_blank" rel="noopener noreferrer"
+             style="color: var(--text); text-decoration:none; font-weight:400; display:inline-flex; align-items:center; gap:8px;">
+            <!-- Icon: Externer Link -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true" focusable="false">
+              <path d="M14 3h7v7" />
+              <path d="M10 14L21 3" />
+              <path d="M21 14v7H3V3h7" />
+            </svg>
+            <span>Zur Website palmbeachconcerts.de</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <h2>Tickets</h2>
+        <div class="features">
+          <div class="feature">
+            <!-- Ticketshop iFrame START -->
+            <iframe
+              id="dgbrt-ticket-frame"
+              title="Palm Beach Concerts Ticketshop"
+              style="overflow:auto; overflow-x:hidden !important; overflow-y:scroll; border:0; height:800px; width:100%; background:transparent;"
+              src="https://cdn.cstwo.dgbrt.de/static-shopframe/event/156.html"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+            <!-- Ticketshop iFrame END -->
+
+            <!-- Automatic Frame resizing START -->
+            <script defer src="https://s3-eu-west-1.amazonaws.com/static.cstwo.dgbrt.de/js/shopframe-scripts/frame-interact-js-min.js"></script>
+            <!-- Automatic Frame resizing END -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="agb">
+      <div class="container">
+        <h2>AGB / Ticketbedingungen / Widerrufsbelehrung</h2>
+        <div class="card">
+          <p>
+            <a href="pbc_sections.html" target="_blank" rel="noopener noreferrer"
+               style="color: var(--text); text-decoration:none; font-weight:400; display:inline-flex; align-items:center; gap:8px;">
+              <!-- Icon: Externer Link -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true" focusable="false">
+                <path d="M14 3h7v7" />
+                <path d="M10 14L21 3" />
+                <path d="M21 14v7H3V3h7" />
+              </svg>
+              <span>Hier findest du die Allgemeinen Geschäftsbedingungen und Ticketbedingungen mit Widerrufsbelehrung.</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2>Kontakt</h2>
+        <p>Bei Fragen oder Problemen mit deiner Bestellung schreib uns einfach.</p>
+        <div class="card">
+          <form id="contactForm" class="contact-form" action="https://formspree.io/f/xpwleoob" method="POST" novalidate>
+            <label for="cf-email">Absender-Adresse</label>
+            <input type="email" id="cf-email" name="email" placeholder="you@example.com" required autocomplete="email" inputmode="email" />
+
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" name="name" placeholder="Dein Name" required autocomplete="name" />
+
+            <label for="cf-message">Nachricht</label>
+            <textarea id="cf-message" name="message" placeholder="Worum geht es?" required></textarea>
+
+            <!-- Honeypot: leer lassen -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <!-- Optionen -->
+            <input type="hidden" name="_subject" value="Kontaktformular – Palm Beach Concerts">
+            <input type="hidden" name="_language" value="de">
+
+            <button type="submit" aria-label="Nachricht senden">Nachricht senden</button>
+            <div id="formStatus" class="form-status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="Impressum">
+      <div class="container">
+        <h2>Impressum</h2>
+        <div class="card impressum-card">
+          <p>Palm Beach Concerts</p>
+          <p>Jörg Jokschas, Alboinstr. 39, 12103 Berlin</p>
+          <p>E-Mail: kontakt<span aria-hidden="true">[ÄT]</span><span class="visually-hidden">@</span>palmbeachconcerts.de</p>
+          <p>USt-ID nicht beantragt</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+      <small>© <span id="year"></span> Palm Beach Concerts. Alle Rechte vorbehalten. |
+      <a href="dse_pb.html" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration:none;">Datenschutzerklärung</a></small>
+      <div style="display:flex; gap:16px;">
+        <!-- Website -->
+        <a href="https://www.palmbeachconcerts.de" target="_blank" rel="noopener noreferrer" aria-label="Website" style="color:var(--muted);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 17.93A8.001 8.001 0 014.07 13H7c.55 0 1 .45 1 1v1c0 1.1.9 2 2 2v2.93zM12 20a7.96 7.96 0 01-4.9-1.7A4.99 4.99 0 0012 17a4.99 4.99 0 004.9 1.3A7.96 7.96 0 0112 20zm1-17.93V5c0 1.1-.9 2-2 2H9c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h2c1.1 0 2 .9 2 2v1h2.93A8.001 8.001 0 0113 2.07zM20 12a7.96 7.96 0 01-1.7 4.9A4.99 4.99 0 0017 12a4.99 4.99 0 001.3-4.9A7.96 7.96 0 0120 12z"/>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/palmbeachconcerts" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="color:var(--muted);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm8.75 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5
+
+
+ChatGPT kann Fehler machen. Überprüfe wichtige Informationen. Siehe Cookie-Voreinstellungen.
