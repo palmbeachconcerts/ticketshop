@@ -6,6 +6,19 @@
   <title>Palm Beach Concerts – Ticketshop</title>
   <meta name="description" content="Offizieller Ticketshop von Palm Beach Concerts." />
   <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#ff2ea6" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Palm Beach Concerts – Ticketshop" />
+  <meta property="og:description" content="Tickets schnell, sicher und unkompliziert." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="pbc_logo_transp_4000.png" />
+  <meta property="og:url" content="https://www.palmbeachconcerts.de/tickets" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Palm Beach Concerts – Ticketshop" />
+  <meta name="twitter:description" content="Tickets schnell, sicher und unkompliziert." />
+  <meta name="twitter:image" content="pbc_logo_transp_4000.png" />
+
   <style>
     :root {
       --bg: #ffffff;
@@ -15,6 +28,7 @@
       --border: #ececec;
       --radius: 16px;
       --maxw: 1100px;
+      --shadow: 0 10px 30px rgba(0,0,0,.04);
     }
 
     * { box-sizing: border-box; }
@@ -28,6 +42,12 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       scroll-behavior: smooth;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 8px;
     }
 
     h1, h2, h3 { color: var(--accent); line-height: 1.15; margin: 0 0 12px; }
@@ -46,51 +66,56 @@
     .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
     .brand img { height: 40px; width: auto; border-radius: 8px; }
     nav a { text-decoration: none; color: var(--text); opacity: .85; padding: 8px 10px; border-radius: 10px; }
-    nav a:hover { background: var(--border); opacity: 1; }
+    nav a:hover, nav a:focus-visible { background: var(--border); opacity: 1; }
 
-    .hero { padding: clamp(48px, 8vw, 96px) 0; }
+    .hero { padding: clamp(48px, 8vw, 96px) 0; scroll-margin-top: 90px; }
     .hero-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 5vw, 56px); align-items: center; }
     .card {
       border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(16px, 3vw, 28px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.04);
-      background: #fff;
+      box-shadow: var(--shadow);
+      background: var(--bg);
     }
+
     .hero .card {
-  display: flex;
-  align-items: center;   /* vertikal zentrieren */
-  justify-content: center; /* horizontal zentrieren */
-  /* optional etwas weniger Innenabstand, damit das Logo größer wirken kann: */
-  padding: clamp(12px, 2vw, 20px);
-}
-.hero #heroImg {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-    .cta { display: inline-block; padding: 12px 18px; border-radius: 999px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; }
-    .cta:hover { filter: brightness(0.95); }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 2vw, 20px);
+    }
+    .hero #heroImg {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .cta {
+      display: inline-block; padding: 12px 18px; border-radius: 999px;
+      background: var(--accent); color: #fff; text-decoration: none; font-weight: 600;
+    }
+    .cta:hover, .cta:focus-visible { filter: brightness(0.95); }
     .cta.secondary { background: #000; }
+
+    section { padding: clamp(36px, 6vw, 72px) 0; }
+    section[id] { scroll-margin-top: 90px; }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature { border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; background: var(--bg); }
+    .feature h3 { margin-bottom: 6px; }
 
     .mock {
       aspect-ratio: 4 / 3; border-radius: var(--radius); border: 1px dashed var(--border);
       display: grid; place-items: center; color: var(--muted);
     }
 
-    section { padding: clamp(36px, 6vw, 72px) 0; }
-    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .feature { border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; background: #fff; }
-    .feature h3 { margin-bottom: 6px; }
-
-
     footer { border-top: 1px solid var(--border); padding: 24px 0; color: var(--muted); font-size: 14px; }
+    footer a:hover, footer a:focus-visible { color: var(--accent); }
 
     @media (max-width: 860px) {
       .hero-wrap { grid-template-columns: 1fr; }
       .features { grid-template-columns: 1fr; }
       nav { display: none; }
     }
-  footer a:hover { color: var(--accent); }
 
     /* Kontaktformular */
     .contact-form { max-width: 520px; }
@@ -101,7 +126,7 @@
       padding: 10px 12px;
       border: 1px solid var(--accent);
       border-radius: var(--radius);
-      background: #fff;
+      background: var(--bg);
       color: var(--text);
       outline: none;
     }
@@ -116,16 +141,38 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .contact-form button:hover { filter: brightness(0.95); }
+    .contact-form button:hover, .contact-form button:focus-visible { filter: brightness(0.95); }
     .form-status { margin-top: 10px; font-size: 14px; color: var(--muted); }
-
-    
 
     /* Impressum kompakter in einer Karte */
     #Impressum .card.impressum-card { line-height: 1.3; }
     #Impressum .card.impressum-card p { margin: 4px 0; }
 
-</style>
+    /* Skip Link */
+    .skip-link {
+      position: absolute; left: -9999px; top: auto;
+    }
+    .skip-link:focus {
+      left: 16px; top: 16px; z-index: 1000;
+      background: var(--accent); color:#fff; padding:10px 14px; border-radius: 12px;
+      text-decoration: none;
+    }
+  </style>
+
+  <!-- JSON-LD Organization -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Palm Beach Concerts",
+    "url":"https://www.palmbeachconcerts.de",
+    "logo":"https://www.palmbeachconcerts.de/pbc_logo_transp_4000.png",
+    "sameAs":[
+      "https://www.instagram.com/palmbeachconcerts",
+      "https://www.facebook.com/palmbeachconcerts"
+    ]
+  }
+  </script>
 </head>
 <body>
   <header>
